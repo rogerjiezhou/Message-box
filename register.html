@@ -1,32 +1,89 @@
 
   <div class="container">
 
-      <form name="form" style="margin:0 auto; width:270px; margin-top:105px">
+      <form name="userForm" ng-submit="onSubmit()" style="margin:0 auto; width:270px; margin-top:105px">
         <h3 class="form-signin-heading">Register new account</h3></br>
-        <label class="sr-only" >Username</label>
-        <input type="text" name="username" ng-model="formModel.username" class="form-control" placeholder="Username" ng-keyup="validateUsername()" autofocus>
-        <div><img  style="margin: 10px 0 10px 0" ng-if="typing" src="http://www.artofmaking.ac.uk/media/static/frontend-assets/img/samples/loading.gif" width="20" height="20" /><p style="display:inline-block; margin:5px" ng-if="typing">Checking...</p><p style="color:green;margin-bottom:0" ng-if="validated">Valid username</p><p style="color:red;margin-bottom:0" ng-if="invalidated">Invalid username</p></div>
+        <div class="form-group" ng-class="{ 'has-error' : userForm.username.$dirty && userForm.username.$error.required }">
+          <label class="sr-only" >Username</label>
+          <input type="text" 
+                 name="username" 
+                 ng-model="formModel.username" 
+                 class="form-control" 
+                 placeholder="Username" 
+                 ng-keyup="validateUsername()" 
+                 autofocus
+                 required>
+          <div class="help-block">
+            <img  style="margin: 10px 0 10px 0" ng-if="typing" src="http://www.artofmaking.ac.uk/media/static/frontend-assets/img/samples/loading.gif" width="20" height="20" />
+            <p style="display:inline-block; margin:5px" ng-if="typing">Checking...</p>
+            <!-- <p style="color:green;margin-bottom:0" ng-show="validated">Valid username</p> -->
+            <p style="color:red;margin-bottom:0" ng-show="invalidated">Invalid username</p>
+          </div>
+        </div>
         </br>
-        <label class="sr-only">Password</label>
-        <input type="password" name="pwd" ng-model="formModel.password" class="form-control" placeholder="Password" >
+        <div class="form-group" ng-class="{ 'has-error' : userForm.pwd.$dirty && userForm.pwd.$error.required }" >
+          <label class="sr-only">Password</label>
+          <input type="password" 
+                 name="pwd" 
+                 ng-model="formModel.password" 
+                 class="form-control" 
+                 placeholder="Password"
+                 required>
+        </div>
         </br>
-        <label class="sr-only" >First Name</label>
-        <input type="text" name="firstname" ng-model="formModel.firstname" class="form-control" placeholder="First Name">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$dirty && userForm.firstname.$error.required }">
+          <label class="sr-only" >First Name</label>
+          <input type="text"
+                 name="firstname" 
+                 ng-model="formModel.firstname" 
+                 class="form-control" 
+                 placeholder="First Name"
+                 required>
+        </div>
         </br>
-        <label class="sr-only" >Last Name</label>
-        <input type="text" name="lastname" ng-model="formModel.lastname" class="form-control" placeholder="Last Name">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.lastname.$dirty && userForm.lastname.$error.required }">
+          <label class="sr-only" >Last Name</label>
+          <input type="text" 
+                 name="lastname" 
+                 ng-model="formModel.lastname" 
+                 class="form-control" 
+                 placeholder="Last Name"
+                 required>
+        </div>                
         </br>
-        <label class="sr-only" >Email Address</label>
-        <input type="email" name="email" ng-model="formModel.email" class="form-control" placeholder="Email Address">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.email.$dirty && userForm.email.$error.required }">
+          <label class="sr-only" >Email Address</label>
+          <input type="email" 
+                 name="email" 
+                 ng-model="formModel.email" 
+                 class="form-control" 
+                 placeholder="Email Address"
+                 required>
+        </div>                
         </br>
-        <label class="sr-only" >Phone</label>
-        <input type="text" name="phone" ng-model="formModel.phone" class="form-control" placeholder="Phone">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$dirty && userForm.phone.$error.required }">
+          <label class="sr-only" >Phone</label>
+          <input type="text" 
+                 name="phone" 
+                 ng-model="formModel.phone" 
+                 class="form-control" 
+                 placeholder="Phone"
+                 required>
+        </div>                 
         </br>
-        <label class="sr-only" >Location</label>
-        <input type="text" name="location" ng-model="formModel.location" class="form-control" placeholder="Location">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.location.$dirty && userForm.location.$error.required }">
+          <label class="sr-only" >Location</label>
+          <input type="text" 
+                 name="location" 
+                 ng-model="formModel.location" 
+                 class="form-control" 
+                 placeholder="Location"
+                 required>
+        </div>
         </br>
-        
-        <button class="btn btn-md btn-primary btn-block" ng-click="onSubmit()">Create new accout</button>
+        <div class="form-actions">
+          <button ng-disabled="userForm.$invalid" class="btn btn-md btn-primary btn-block" type="submit">Create new accout</button>
+        </div>
       </form>
 
     </div> <!-- /container -->
