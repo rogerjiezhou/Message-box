@@ -6,8 +6,13 @@ app.config(function($routeProvider) {
     templateUrl:'login.html',
     controller:'login'  
   })
+  .when('/test', {
+    templateUrl:'test.html',
+ 
+  })
   .when('/register', {
-    templateUrl:'register.html'
+    templateUrl:'register.html',
+    controller:'register'
   });
 
 });
@@ -16,4 +21,12 @@ app.controller('login', ['$scope', '$location', function($scope, $location) {
   $scope.goto = function( path ){
     $location.path( path );
   }
-}])
+}]);
+
+app.controller('register', ['$scope', function($scope){
+  $scope.formModel = {};
+  $scope.onSubmit = function() {
+    alert("click");
+    console.log($scope.formModel);
+  }
+}]);
