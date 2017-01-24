@@ -28,5 +28,13 @@ app.controller('register', ['$scope', function($scope){
   $scope.onSubmit = function() {
     alert("click");
     console.log($scope.formModel);
+    if(localStorage !== undefined){
+      if(localStorage.length === 0){
+        localStorage.users = JSON.stringify([]);
+      }
+      var users = JSON.parse(localStorage.users);
+      users.push($scope.formModel);
+      localStorage.users = JSON.stringify(users);
+    }
   }
 }]);
