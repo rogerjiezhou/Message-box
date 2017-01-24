@@ -4,7 +4,8 @@
       <form name="form" style="margin:0 auto; width:270px; margin-top:105px">
         <h3 class="form-signin-heading">Register new account</h3></br>
         <label class="sr-only" >Username</label>
-        <input type="text" name="username" ng-model="formModel.username" class="form-control" placeholder="Username" autofocus>
+        <input type="text" name="username" ng-model="formModel.username" class="form-control" placeholder="Username" ng-keyup="validateUsername()" autofocus>
+        <div><img  style="margin: 10px 0 10px 0" ng-if="typing" src="http://www.artofmaking.ac.uk/media/static/frontend-assets/img/samples/loading.gif" width="20" height="20" /><p style="display:inline-block; margin:5px" ng-if="typing">Checking...</p><p style="color:green;margin-bottom:0" ng-if="validated">Valid username</p><p style="color:red;margin-bottom:0" ng-if="invalidated">Invalid username</p></div>
         </br>
         <label class="sr-only">Password</label>
         <input type="password" name="pwd" ng-model="formModel.password" class="form-control" placeholder="Password" >
