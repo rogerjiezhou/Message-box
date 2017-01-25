@@ -18,8 +18,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
   })
   .state('home.message', {
     url:'/message',
-    contorller:'login',
+    contorller:'message',
     templateUrl:'message.html',
+  })
+  .state('home.messageDetail', {
+    url:'/messageDetail/:id',
+    contorller:'messageDetail',
+    templateUrl:'messageDetail.html',
   })
   // .state('home', {
   //   url:'/home',
@@ -246,7 +251,7 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
   }
 }]);
 
-app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', function($scope, MessageService, $http, $rootScope) {
+app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$state', function($scope, MessageService, $http, $rootScope, $state) {
   $rootScope.messages = [];
   
   $http.get('message.json').then(function(data) {
@@ -254,4 +259,8 @@ app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', fun
     localStorage.messages = JSON.stringify($rootScope.messages);
   });
 
+  $scope.goto = function(id) {
+    // $location.path('/home/messageDetail');
+    $state.go('home.messageDetail', {id: id})
+  }
 }]);

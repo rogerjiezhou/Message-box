@@ -11,7 +11,7 @@
         <th>Title</th>
         <th>Date</th>
       </tr>
-      <tr ng-repeat="message in messages">
+      <tr ng-repeat="message in messages" ng-click="goto(message.id)">
         <td class="important">{{message.important}}</td>
         <td>{{message.recipient}}</td>
         <td>{{message.recipient}}</td>
