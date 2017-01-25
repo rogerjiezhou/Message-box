@@ -1,7 +1,7 @@
  <div ng-controller="profile">
 
       <form name="profileForm" ng-submit="updateUser()" style="margin:0 auto; width:270px; margin-top:45px">
-        <h3 class="form-signin-heading">Your profile</h3></br>
+        <h3 class="form-signin-heading" style="text-align:center">Your profile</h3></br>
         <div class="form-group" ng-class="{ 'has-error' : profileForm.username.$dirty && profileForm.username.$error.required }">
           <label class="sr-only" >Username</label>
           <input type="text" 

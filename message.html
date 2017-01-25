@@ -1,4 +1,25 @@
 <div ng-controller="message">
-asfdasdf
-<p>{{haha}}</p>
+  <div>
+    <h2 style="text-align:center;margin-top:40px">Message Box</h2>
+    <table id="messageTable" class="table table-striped table-hover">
+      <tr>
+        <th class="important">Important</th>
+        <th>Sender</th>
+        <th>Sender</th>
+        <th>Recipient</th>
+        <th>Recipient</th>
+        <th>Title</th>
+        <th>Date</th>
+      </tr>
+      <tr ng-repeat="message in messages">
+        <td class="important">{{message.important}}</td>
+        <td>{{message.recipient}}</td>
+        <td>{{message.recipient}}</td>
+        <td>{{message.sender}}</td>
+        <td>{{message.sender}}</td>
+        <td>{{message.title}}</td>
+        <td>{{message.created_at}}</td>
+      </tr>
+    </table>
+  </div>
 </div>

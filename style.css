@@ -9,3 +9,11 @@
   width:150px;
   height:150px;
 }
+
+#messageTable {
+  margin-top:50px;
+}
+
+.important {
+  text-align:center;
+}

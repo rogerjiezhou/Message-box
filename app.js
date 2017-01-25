@@ -9,8 +9,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   })
   .state('home', {
     url:'/home',
-    templateUrl:'home.html',
-    contorller:'home'
+    templateUrl:'home.html'
   })
   .state('home.profile', {
     url:'/profile',
@@ -37,9 +36,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
   });
   $urlRouterProvider.otherwise("/login");
 
-});
-app.controller('message', function($scope) {
-  $scope.haha = "gaga";
 });
 
 app.controller('login', ['$scope', '$rootScope', '$location', 'UserService', function($scope, $rootScope, $location, UserService) {
@@ -114,6 +110,13 @@ app.controller('register', ['$scope','$rootScope', 'UserService', '$location', f
   }
 }]);
 
+
+app.factory('MessageService', ['$q','$filter', '$timeout', '$rootScope', function($q, $filter, $timeout, $rootScope) {
+  var MessageService = {};
+
+  return MessageService;
+}]);
+
 app.factory('UserService',['$q','$filter', '$timeout', '$rootScope', function($q, $filter, $timeout, $rootScope) {
   var UserService = {};
 
@@ -185,9 +188,6 @@ app.factory('UserService',['$q','$filter', '$timeout', '$rootScope', function($q
 
 }])
 
-app.controller('home', function() {
-
-});
 
 app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$timeout', function($scope, $rootScope, UserService, $location, $timeout){
 
@@ -244,4 +244,14 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
       $rootScope.validated = false;
       $rootScope.invalidated = false;
   }
+}]);
+
+app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', function($scope, MessageService, $http, $rootScope) {
+  $rootScope.messages = [];
+  
+  $http.get('message.json').then(function(data) {
+    $rootScope.messages = data.data;
+    localStorage.messages = JSON.stringify($rootScope.messages);
+  });
+
 }]);
