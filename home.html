@@ -12,18 +12,20 @@
             <img class="icon" src="user.jpg">
           </div>
           <li>
-              <a class="link" href="#"><i class="fa fa-fw fa-home"></i>  My Profile</a>
+              <a class="link" ui-sref="home.profile"><i class="fa fa-fw fa-home"></i>  My Profile</a>
           </li>
           <li>
-              <a class="link" href="#"><i class="fa fa-fw fa-folder"></i>  Message</a>
+              <a class="link" ui-sref="home.message"><i class="fa fa-fw fa-folder"></i>  Message</a>
           </li>
           <li>
-              <a class="link" href="#"><i class="fa fa-fw fa-file-o"></i>  Sign out</a>
+              <a class="link" href="#signout"><i class="fa fa-fw fa-file-o"></i>  Sign out</a>
           </li>          
         </ul>
       </nav>
     </div>
-    <div class="col-md-9" style="background-color:#f7f7f7;height:100%">
+    <div ui-view="" class="col-md-9 tab-content" style="background-color:#f7f7f7;height:100%">
+      
+
     </div>
   </div>
 </div>

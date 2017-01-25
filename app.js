@@ -1,25 +1,44 @@
-var app = angular.module('myapp',['ngRoute']);
+var app = angular.module('myapp',['ui.router']);
 
-app.config(function($routeProvider) {
-  $routeProvider
-  .when('/', {
+app.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('login', {
+    url:'/login',
     templateUrl:'login.html',
     controller:'login'  
   })
-  .when('/home', {
+  .state('home', {
+    url:'/home',
     templateUrl:'home.html',
     contorller:'home'
   })
-  .when('/test', {
+  .state('home.profile', {
+    url:'/profile',
+    templateUrl:'profile.html',
+    contorller:'home'
+  })
+  .state('home.message', {
+    url:'/message',
+    templateUrl:'message.html',
+    contorller:'home'
+  })
+  // .state('home', {
+  //   url:'/home',
+  //   templateUrl:'home.html',
+  //   contorller:'home'
+  // })
+  .state('/test', {
     templateUrl:'test.html',
   })
-  .when('/register', {
+  .state('register', {
+    url:'/register',
     templateUrl:'register.html',
     controller:'register'
   });
-
+  $urlRouterProvider.otherwise("/login");
 
 });
+
 
 app.controller('login', ['$scope', '$rootScope', '$location', 'UserService', function($scope, $rootScope, $location, UserService) {
   $scope.goto = function( path ){
