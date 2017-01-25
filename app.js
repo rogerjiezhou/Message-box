@@ -6,6 +6,10 @@ app.config(function($routeProvider) {
     templateUrl:'login.html',
     controller:'login'  
   })
+  .when('/home', {
+    templateUrl:'home.html',
+    contorller:'home'
+  })
   .when('/test', {
     templateUrl:'test.html',
   })
@@ -27,10 +31,10 @@ app.controller('login', ['$scope', '$rootScope', '$location', 'UserService', fun
       if(response.success) {
         $rootScope.globals = {
           currentUser: {
-            username: "username"
+            username: $scope.username
           }
         }
-        $location.path('/test');
+        $location.path('/home');
       } else {
         alert(response.message);
       }
@@ -146,3 +150,7 @@ app.factory('UserService',['$q','$filter', '$timeout', function($q, $filter, $ti
       return JSON.parse(localStorage.users);    
   }
 }])
+
+app.controller('home', function() {
+
+});

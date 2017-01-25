@@ -1,0 +1,12 @@
+.link {
+  color:white;
+  font-size:20px;
+  text-align:center;
+}
+
+.icon {
+  display:block;
+  margin: 20px auto;
+  width:150px;
+  height:150px;
+}
