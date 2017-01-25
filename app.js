@@ -119,6 +119,23 @@ app.controller('register', ['$scope','$rootScope', 'UserService', '$location', f
 app.factory('MessageService', ['$q','$filter', '$timeout', '$rootScope', function($q, $filter, $timeout, $rootScope) {
   var MessageService = {};
 
+  MessageService.GetMessage = GetMessage;
+
+  function GetMessage(messageID) {
+    var deferred = $q.defer();
+    var filtered = $filter('filter')(getMessage(), {id : messageID})
+    var message = filtered.length ? filtered[0] : null;
+    deferred.resolve(message);
+    return deferred.promise;
+  }
+
+  function getMessage() {
+    if(!localStorage.messages){
+      localStorage.messages = JSON.stringify([]);
+    }
+    return JSON.parse(localStorage.messages);
+  }
+
   return MessageService;
 }]);
 
@@ -167,7 +184,7 @@ app.factory('UserService',['$q','$filter', '$timeout', '$rootScope', function($q
 
   function GetByUsername(username) {
     var deferred = $q.defer();
-    var filtered = $filter('filter')(getUsers(),{username, username});
+    var filtered = $filter('filter')(getUsers(),{username: username});
     var user = filtered.length ? filtered[0] : null;
     deferred.resolve(user);
     return deferred.promise;
@@ -260,7 +277,23 @@ app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$s
   });
 
   $scope.goto = function(id) {
-    // $location.path('/home/messageDetail');
     $state.go('home.messageDetail', {id: id})
   }
+}]);
+
+app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$state', '$stateParams', function($scope, MessageService, $rootScope, $state, $stateParams) {
+
+  console.log($stateParams.id);
+
+  $scope.message = {};
+
+  MessageService.GetMessage($stateParams.id)
+    .then(function(message) {
+      $scope.message = message;
+  });
+
+  $scope.goto = function(id) {
+    $state.go('home.messageDetail', {id: id})
+  }
+
 }]);

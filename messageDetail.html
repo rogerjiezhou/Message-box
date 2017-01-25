@@ -1,1 +1,25 @@
-messageDetail.html
+<div ng-controller="messageDetail">
+  <div>
+    <h2 style="text-align:center;margin-top:40px">Message</h2>
+    <table class="messageTable table">
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td style="text-align:right"><a><img class="message" src="reply.png"></a></td>
+          <td style="text-align:center"><a><img class="message" src="delete.png"></a></td>
+        </tr>
+        <tr>
+          <td>{{message.title}}</td>
+          <td>
+          <td style="text-align:right">{{message.created_at}}</td>
+          <td style="text-align:center">{{message.important}}</td>
+        </tr>
+        <tr><td colspan="4">From: {{message.sender}}</td></tr>
+        <tr><td colspan="4">To: {{message.recipient}}</td></tr>
+        <tr><td colspan="4">{{message.description}}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

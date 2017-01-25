@@ -10,10 +10,16 @@
   height:150px;
 }
 
-#messageTable {
+.messageTable {
   margin-top:50px;
+
 }
 
 .important {
   text-align:center;
+}
+
+.message {
+  width:24px;
+  height:24px;
 }
