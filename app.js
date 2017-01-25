@@ -15,12 +15,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('home.profile', {
     url:'/profile',
     templateUrl:'profile.html',
-    contorller:'home'
+    contorller:'profile'
   })
   .state('home.message', {
     url:'/message',
+    contorller:'login',
     templateUrl:'message.html',
-    contorller:'home'
   })
   // .state('home', {
   //   url:'/home',
@@ -38,7 +38,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/login");
 
 });
-
+app.controller('message', function($scope) {
+  $scope.haha = "gaga";
+});
 
 app.controller('login', ['$scope', '$rootScope', '$location', 'UserService', function($scope, $rootScope, $location, UserService) {
   $scope.goto = function( path ){
@@ -53,7 +55,7 @@ app.controller('login', ['$scope', '$rootScope', '$location', 'UserService', fun
             username: $scope.username
           }
         }
-        $location.path('/home');
+        $location.path('/home/profile');
       } else {
         alert(response.message);
       }
@@ -112,12 +114,13 @@ app.controller('register', ['$scope','$rootScope', 'UserService', '$location', f
   }
 }]);
 
-app.factory('UserService',['$q','$filter', '$timeout', function($q, $filter, $timeout) {
+app.factory('UserService',['$q','$filter', '$timeout', '$rootScope', function($q, $filter, $timeout, $rootScope) {
   var UserService = {};
 
-  UserService.GetByUsername = GetByUsername,
+  UserService.GetByUsername = GetByUsername;
   UserService.ValidateRegister = ValidateRegister;
   UserService.Login = Login;
+  UserService.GetUserIndex = GetUserIndex;
 
   return UserService;
  
@@ -162,14 +165,81 @@ app.factory('UserService',['$q','$filter', '$timeout', function($q, $filter, $ti
     return deferred.promise;
   }
 
+  function GetUserIndex(username) {
+    var users = getUsers();
+    var index = 0;
+    for(var key in users){
+      if(users[key].username == $rootScope.globals.currentUser.username)
+        break;
+      index++;
+    }
+    return index;
+  }
+
   function getUsers() {
     if(!localStorage.users){
       localStorage.users = JSON.stringify([]);
     }
       return JSON.parse(localStorage.users);    
   }
+
 }])
 
 app.controller('home', function() {
 
 });
+
+app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$timeout', function($scope, $rootScope, UserService, $location, $timeout){
+
+  $rootScope.userModel = {};
+
+  UserService.GetByUsername($rootScope.globals.currentUser.username)
+    .then(function(user) {
+      $rootScope.userModel = user;
+  });
+
+  $rootScope.userIndex = UserService.GetUserIndex($rootScope.globals.currentUser.username);
+
+  console.log($rootScope.userIndex);
+
+  $rootScope.usernameValid = false;
+  $rootScope.typing = false;
+
+  $scope.updateUser = function() {
+    if($rootScope.usernameValid && $scope.profileForm.$valid){
+      var users = JSON.parse(localStorage.users);
+      users[$rootScope.userIndex] = $rootScope.userModel;
+      localStorage.users = JSON.stringify(users);
+      $rootScope.globals.currentUser.username = $rootScope.userModel.username;
+      $rootScope.usernameValid = false;
+    } else {
+      alert("invalid username");
+    }
+    
+  };
+  $scope.validateUsername = function() {
+    if($rootScope.userModel.username != "") {
+      $rootScope.typing = true;
+      $rootScope.validated = false;
+      $rootScope.invalidated = false;
+      UserService.ValidateRegister($rootScope.userModel)
+        .then(function(valid) {
+          if(valid.success) {
+            $rootScope.typing = false;
+            $rootScope.invalidated = false;
+            $rootScope.usernameValid = true;
+            console.log("valid");
+          } else {
+            console.log("invalid");
+            $rootScope.typing = false;
+            $rootScope.invalidated = true;
+            $rootScope.usernameValid = false;
+          }
+        }) 
+    }
+    else
+      $rootScope.typing = false;
+      $rootScope.validated = false;
+      $rootScope.invalidated = false;
+  }
+}]);

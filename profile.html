@@ -1,1 +1,88 @@
-profile page
+ <div ng-controller="profile">
+
+      <form name="profileForm" ng-submit="updateUser()" style="margin:0 auto; width:270px; margin-top:45px">
+        <h3 class="form-signin-heading">Your profile</h3></br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.username.$dirty && profileForm.username.$error.required }">
+          <label class="sr-only" >Username</label>
+          <input type="text" 
+                 name="username" 
+                 ng-model="userModel.username" 
+                 class="form-control" 
+                 placeholder="Username" 
+                 ng-keyup="validateUsername()"
+                 autofocus
+                 required>
+          <div class="help-block">
+            <img  style="margin: 10px 0 10px 0" ng-if="typing" src="http://www.artofmaking.ac.uk/media/static/frontend-assets/img/samples/loading.gif" width="20" height="20" />
+            <p style="display:inline-block; margin:5px" ng-if="typing">Checking...</p>
+            <!-- <p style="color:green;margin-bottom:0" ng-show="validated">Valid username</p> -->
+            <p style="color:red;margin-bottom:0" ng-show="invalidated">Invalid username</p>
+          </div>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.pwd.$dirty && profileForm.pwd.$error.required }" >
+          <label class="sr-only">Password</label>
+          <input type="password" 
+                 name="pwd" 
+                 ng-model="userModel.password" 
+                 class="form-control" 
+                 placeholder="Password"
+                 required>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.firstname.$dirty && profileForm.firstname.$error.required }">
+          <label class="sr-only" >First Name</label>
+          <input type="text"
+                 name="firstname" 
+                 ng-model="userModel.firstname" 
+                 class="form-control" 
+                 placeholder="First Name"
+                 required>
+        </div>
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.lastname.$dirty && profileForm.lastname.$error.required }">
+          <label class="sr-only" >Last Name</label>
+          <input type="text" 
+                 name="lastname" 
+                 ng-model="userModel.lastname" 
+                 class="form-control" 
+                 placeholder="Last Name"
+                 required>
+        </div>                
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.email.$dirty && profileForm.email.$error.required }">
+          <label class="sr-only" >Email Address</label>
+          <input type="email" 
+                 name="email" 
+                 ng-model="userModel.email" 
+                 class="form-control" 
+                 placeholder="Email Address"
+                 required>
+        </div>                
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.phone.$dirty && profileForm.phone.$error.required }">
+          <label class="sr-only" >Phone</label>
+          <input type="text" 
+                 name="phone" 
+                 ng-model="userModel.phone" 
+                 class="form-control" 
+                 placeholder="Phone"
+                 required>
+        </div>                 
+        </br>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.location.$dirty && profileForm.location.$error.required }">
+          <label class="sr-only" >Location</label>
+          <input type="text" 
+                 name="location" 
+                 ng-model="userModel.location" 
+                 class="form-control" 
+                 placeholder="Location"
+                 required>
+        </div>
+        </br>
+        <div class="form-actions">
+          <button ng-disabled="profileForm.$invalid" class="btn btn-md btn-primary btn-block" type="submit">Update accout</button>
+        </div>
+      </form>
+
+    </div> <!-- /container -->
