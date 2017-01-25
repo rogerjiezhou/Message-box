@@ -22,17 +22,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl:'message.html',
   })
   .state('home.messageDetail', {
-    url:'/messageDetail/:id',
+    url:'/message_detail/:id',
     contorller:'messageDetail',
     templateUrl:'messageDetail.html',
-  })
-  // .state('home', {
-  //   url:'/home',
-  //   templateUrl:'home.html',
-  //   contorller:'home'
-  // })
-  .state('/test', {
-    templateUrl:'test.html',
   })
   .state('register', {
     url:'/register',
@@ -119,13 +111,29 @@ app.controller('register', ['$scope','$rootScope', 'UserService', '$location', f
 app.factory('MessageService', ['$q','$filter', '$timeout', '$rootScope', function($q, $filter, $timeout, $rootScope) {
   var MessageService = {};
 
-  MessageService.GetMessage = GetMessage;
+  MessageService.GetMessageById = GetMessageById;
+  MessageService.DeleteMessage = DeleteMessage;
 
-  function GetMessage(messageID) {
+  function GetMessageById(messageID) {
     var deferred = $q.defer();
     var filtered = $filter('filter')(getMessage(), {id : messageID})
     var message = filtered.length ? filtered[0] : null;
     deferred.resolve(message);
+    return deferred.promise;
+  }
+
+  function DeleteMessage(messageID) {
+    console.log("delete" + messageID);
+    var deferred = $q.defer();
+    var messages = getMessage();
+    for(var key in messages) {
+      if(messages[key].id == messageID){
+        messages.splice(key ,1);
+        localStorage.messages = JSON.stringify(messages);
+        break;
+      }
+    }
+    deferred.resolve(messages);
     return deferred.promise;
   }
 
@@ -271,10 +279,14 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
 app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$state', function($scope, MessageService, $http, $rootScope, $state) {
   $rootScope.messages = [];
   
-  $http.get('message.json').then(function(data) {
-    $rootScope.messages = data.data;
-    localStorage.messages = JSON.stringify($rootScope.messages);
-  });
+  if(JSON.parse(localStorage.messages).length == 0){
+    $http.get('message.json').then(function(data) {
+      $rootScope.messages = data.data;
+      localStorage.messages = JSON.stringify($rootScope.messages);
+    });
+  } else {
+    $rootScope.messages = JSON.parse(localStorage.messages);
+  }
 
   $scope.goto = function(id) {
     $state.go('home.messageDetail', {id: id})
@@ -287,13 +299,17 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
 
   $scope.message = {};
 
-  MessageService.GetMessage($stateParams.id)
+  MessageService.GetMessageById($stateParams.id)
     .then(function(message) {
       $scope.message = message;
   });
 
-  $scope.goto = function(id) {
-    $state.go('home.messageDetail', {id: id})
+  $scope.detele = function() {
+    MessageService.DeleteMessage($stateParams.id)
+      .then(function(message) {
+        $state.go('home.message');
+    })
   }
+
 
 }]);
