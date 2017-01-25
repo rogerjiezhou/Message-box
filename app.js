@@ -203,6 +203,7 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
   console.log($rootScope.userIndex);
 
   $rootScope.usernameValid = false;
+  $rootScope.invalidated = false;
   $rootScope.typing = false;
 
   $scope.updateUser = function() {
@@ -218,7 +219,8 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
     
   };
   $scope.validateUsername = function() {
-    if($rootScope.userModel.username != "") {
+    if($rootScope.userModel.username != "" && 
+        $rootScope.userModel.username != $rootScope.globals.currentUser.username) {
       $rootScope.typing = true;
       $rootScope.validated = false;
       $rootScope.invalidated = false;
