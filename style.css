@@ -15,6 +15,12 @@
 
 }
 
+.messageDetailTable {
+  width:80%;
+  margin: 40px auto 0 auto;
+
+}
+
 .important {
   text-align:center;
 }
@@ -27,4 +33,19 @@
 .importantIcon {
   width:18px;
   height:23px;
+}
+
+.replyForm {
+  width: 70%;
+  margin: 20px auto 0 auto;
+}
+
+.replyText {
+  width:600px;
+  height:150px;
+  margin: 20px auto 0 auto;
+}
+
+.replyBtn {
+  margin: 20px auto 0 auto;
 }

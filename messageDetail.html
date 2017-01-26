@@ -1,14 +1,14 @@
 <div ng-controller="messageDetail">
   <div>
     <h2 style="text-align:center;margin-top:40px">Message</h2>
-    <table class="messageTable table">
+    <table class="messageDetailTable table">
       <tbody>
         <tr>
           <td></td>
           <td></td>
           <td>
           </td>
-          <td style="text-align:right"><img class="message" src="reply.png" ng-click="reply()"></td>
+          <td style="text-align:right"><img class="message" src="reply.png" ng-click="replyMethod()"></td>
           <td style="text-align:center"><img class="message" src="delete.png" ng-click="detele()"></td>
         </tr>
         <tr>
@@ -26,8 +26,10 @@
       </tbody>
     </table>
     
-    <form ng-show="reply">
-      <input type="text">
+    <form id="reply" ng-if="reply" class="replyForm">
+      <textarea name="reply" form="reply" class="replyText" ng-model="replyMessage.description">Enter reply here...
+      </textarea>
+      <button class="btn btn-primary replyBtn" ng-click="submitReply()">Reply</button>
     </form>
   </div>
 

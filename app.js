@@ -230,8 +230,6 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
 
   $rootScope.userIndex = UserService.GetUserIndex($rootScope.globals.currentUser.username);
 
-  console.log($rootScope.userIndex);
-
   $rootScope.usernameValid = false;
   $rootScope.invalidated = false;
   $rootScope.typing = false;
@@ -279,7 +277,7 @@ app.controller('profile', ['$scope','$rootScope', 'UserService', '$location', '$
 app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$state', function($scope, MessageService, $http, $rootScope, $state) {
   $rootScope.messages = [];
   
-  if(JSON.parse(localStorage.messages).length == 0){
+  if(localStorage.messages === undefined){
     $http.get('message.json').then(function(data) {
       $rootScope.messages = data.data;
       localStorage.messages = JSON.stringify($rootScope.messages);
@@ -318,9 +316,10 @@ app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$s
   }
 }]);
 
-app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$state', '$stateParams', function($scope, MessageService, $rootScope, $state, $stateParams) {
-
-  $scope.reply = false;
+app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$state', '$stateParams', '$filter', function($scope, MessageService, $rootScope, $state, $stateParams, $filter) {
+  $scope.replyMessage = {};
+  $scope.replyMessage.description = 'Enter reply here...';
+  $rootScope.reply = false;
   $scope.message = {};
 
   MessageService.GetMessageById($stateParams.id)
@@ -335,9 +334,38 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
     })
   }
 
-  $scope.reply = function() {
-    $scope.reply = true;
+  $scope.replyMethod = function() {
+    $rootScope.reply = true;
   }
+
+  $scope.submitReply = function() {
+    var messages = JSON.parse(localStorage.messages);
+    var lastMessage = messages[messages.length - 1];
+
+    $scope.replyMessage.id = lastMessage + 1;
+    $scope.replyMessage.sender = $rootScope.globals.currentUser.username;
+    $scope.replyMessage.sender_img = $scope.message.sender_img;
+    $scope.replyMessage.recipient = $scope.message.sender;
+    $scope.replyMessage.recipient_img = $scope.message.sender_img;
+    $scope.replyMessage.title = $scope.message.title;
+    $scope.replyMessage.important = '0';
+    $scope.replyMessage.created_at = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
+    
+    for(var key in messages){
+      if(messages[key].id == $stateParams.id){
+        messages[key].reply.push($scope.replyMessage);
+        break;
+      }    
+    }
+    messages.push($scope.replyMessage);
+    console.log(messages);
+    localStorage.messages = JSON.stringify(messages);    
+
+    $rootScope.reply = false;
+
+  }
+
 
   $scope.isImportant = function(message) {
     if(message.important == '1')
