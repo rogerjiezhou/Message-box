@@ -9,7 +9,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
   })
   .state('home', {
     url:'/home',
-    templateUrl:'home.html'
+    templateUrl:'home.html',
+    contorller:'home'
   })
   .state('home.profile', {
     url:'/profile',
@@ -394,3 +395,10 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
   }
 
 }]);
+
+app.controller('home', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
+  $scope.signout = function(){
+    $rootScope.globals.currentUser.username = "";
+    $location.path('/login');
+  }
+}])

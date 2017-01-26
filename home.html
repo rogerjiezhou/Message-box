@@ -1,12 +1,12 @@
 
-<div class="container">
+<div class="container" ng-controller="home">
   <div class="row">
     <div class="col-md-3" style="background-color:#3b5998;height:100%">
       <nav class="navbar-default" role="navigation" style="background-color:#3b5998">
         <ul class="nav sidebar-nav" style="padding-top:20px; text-align:center;">
 
           <li class="sidebar-brand" style="color:white">             
-               <h2 style="text-align:center">Welcome<br> {{globals.currentUser.username}}</h2>           
+               <h2 style="text-align:center">Welcome<br> {{globals.currentUser.username}}</h2>          
           </li>
           <div class="row" style="margin-bottom:20px">
             <img class="icon" src="user.jpg">
@@ -18,7 +18,7 @@
               <a class="link" ui-sref="home.message"><i class="fa fa-fw fa-folder"></i>  Messages</a>
           </li>
           <li>
-              <a class="link" href="#signout"><i class="fa fa-fw fa-file-o"></i>  Sign out</a>
+              <a class="link" href ng-click="signout()"><i class="fa fa-fw fa-file-o"></i>  Sign out</a>
           </li>          
         </ul>
       </nav>
