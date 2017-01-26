@@ -350,11 +350,12 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
     $scope.replyMessage.title = $scope.message.title;
     $scope.replyMessage.important = '0';
     $scope.replyMessage.created_at = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-
+    $scope.replyMessage.reply = [];
     
     for(var key in messages){
       if(messages[key].id == $stateParams.id){
         messages[key].reply.push($scope.replyMessage);
+        console.log(messages[key]);
         break;
       }    
     }
@@ -363,7 +364,7 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
     localStorage.messages = JSON.stringify(messages);    
 
     $rootScope.reply = false;
-
+    $state.reload();
   }
 
 
