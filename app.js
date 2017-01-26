@@ -288,6 +288,31 @@ app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$s
     $rootScope.messages = JSON.parse(localStorage.messages);
   }
 
+  $scope.isImportant = function(message) {
+    if(message.important == '1')
+      return true;
+    else
+      return false;
+  }
+
+  $scope.flag = function(id, event){
+    var value = event.target.attributes.src.value;
+    if(value == 'clicked.png')
+      event.target.attributes.src.value = "unclicked.png";
+    else
+      event.target.attributes.src.value = "clicked.png";
+    var messages = JSON.parse(localStorage.messages);
+    for(var key in messages){
+      if(messages[key].id == id){
+        if(messages[key].important == '1')
+          messages[key].important = '0';
+        else
+          messages[key].important = '1';
+      }
+    }
+    localStorage.messages = JSON.stringify(messages);
+  }
+
   $scope.goto = function(id) {
     $state.go('home.messageDetail', {id: id})
   }
@@ -295,8 +320,7 @@ app.controller('message',['$scope', 'MessageService', '$http', '$rootScope', '$s
 
 app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$state', '$stateParams', function($scope, MessageService, $rootScope, $state, $stateParams) {
 
-  console.log($stateParams.id);
-
+  $scope.reply = false;
   $scope.message = {};
 
   MessageService.GetMessageById($stateParams.id)
@@ -311,5 +335,33 @@ app.controller('messageDetail',['$scope', 'MessageService', '$rootScope', '$stat
     })
   }
 
+  $scope.reply = function() {
+    $scope.reply = true;
+  }
+
+  $scope.isImportant = function(message) {
+    if(message.important == '1')
+      return true;
+    else
+      return false;
+  }
+
+  $scope.flag = function(id, event){
+    var value = event.target.attributes.src.value;
+    if(value == 'clicked.png')
+      event.target.attributes.src.value = "unclicked.png";
+    else
+      event.target.attributes.src.value = "clicked.png";
+    var messages = JSON.parse(localStorage.messages);
+    for(var key in messages){
+      if(messages[key].id == id){
+        if(messages[key].important == '1')
+          messages[key].important = '0';
+        else
+          messages[key].important = '1';
+      }
+    }
+    localStorage.messages = JSON.stringify(messages);
+  }
 
 }]);

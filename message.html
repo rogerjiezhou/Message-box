@@ -3,16 +3,17 @@
     <h2 style="text-align:center;margin-top:40px">Message Box</h2>
     <table class="messageTable table table-striped table-hover">
       <tr>
-        <th class="important">Important</th>
-        <th>Sender</th>
-        <th>Sender</th>
-        <th>Recipient</th>
-        <th>Recipient</th>
+        <th class="important" style="text-align:center">Important</th>
+        <th colspan="2" style="text-align:center">Sender</th>
+        <th colspan="2" style="text-align:center">Recipient</th>
         <th>Title</th>
         <th>Date</th>
       </tr>
       <tr ng-repeat="message in messages" ng-click="goto(message.id)">
-        <td class="important">{{message.important}}</td>
+        <td class="important">
+          <img class="importantIcon" src="clicked.png" ng-if="isImportant(message)" ng-click="flag(message.id, $event); $event.stopPropagation()">
+          <img class="importantIcon" src="unclicked.png" ng-if="!isImportant(message)" ng-click="flag(message.id, $event); $event.stopPropagation()">
+        </td>
         <td>{{message.recipient}}</td>
         <td>{{message.recipient}}</td>
         <td>{{message.sender}}</td>
