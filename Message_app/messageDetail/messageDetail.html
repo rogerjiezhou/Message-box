@@ -8,16 +8,16 @@
           <td></td>
           <td>
           </td>
-          <td style="text-align:right"><img class="message" src="reply.png" ng-click="replyMethod()"></td>
-          <td style="text-align:center"><img class="message" src="delete.png" ng-click="detele()"></td>
+          <td style="text-align:right"><img class="message" src="/app-content/img/reply.png" ng-click="replyMethod()"></td>
+          <td style="text-align:center"><img class="message" src="/app-content/img/delete.png" ng-click="detele()"></td>
         </tr>
         <tr>
           <td>{{message.title}}</td>
           <td></td>
           <td colspan="2" style="text-align:right">{{message.created_at}}</td>
           <td style="text-align:center">
-            <img class="importantIcon" src="clicked.png" ng-if="isImportant(message)" ng-click="flag(message.id, $event)">
-            <img class="importantIcon" src="unclicked.png" ng-if="!isImportant(message)" ng-click="flag(message.id, $event)">
+            <img class="importantIcon" src="/app-content/img/clicked.png" ng-if="isImportant(message)" ng-click="flag(message.id, $event)">
+            <img class="importantIcon" src="/app-content/img/unclicked.png" ng-if="!isImportant(message)" ng-click="flag(message.id, $event)">
           </td>
         </tr>
         <tr><td colspan="5">From: {{message.sender}}</td></tr>
