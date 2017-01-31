@@ -14,9 +14,9 @@
           <img class="importantIcon" src="/app-content/img/clicked.png" ng-if="isImportant(message)" ng-click="flag(message.id, $event); $event.stopPropagation()">
           <img class="importantIcon" src="/app-content/img/unclicked.png" ng-if="!isImportant(message)" ng-click="flag(message.id, $event); $event.stopPropagation()">
         </td>
+        <td><img ng-src="{{message.sender_img}}" /></td>
         <td>{{message.sender}}</td>
-        <td>{{message.sender}}</td>
-        <td>{{message.recipient}}</td>
+        <td><img ng-src="{{message.recipient_img}}" /></td>
         <td>{{message.recipient}}</td>
         <td>{{message.title}}</td>
         <td>{{message.created_at}}</td>
