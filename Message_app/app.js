@@ -36,7 +36,7 @@
       })
         .state('register', {
           url:'/register',
-          templateUrl:'register.html',
+          templateUrl:'register/register.html',
           controller:'register'
       });
       $urlRouterProvider.otherwise("/login");
